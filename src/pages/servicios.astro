@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Servicios |  Lavo Plus</title>
+    <meta
+      name="description"
+      content="Lavandería y Tintorería en Puebla. Lavado, secado, planchado, y más con entrega a domicilio. ¡Cotiza por WhatsApp!"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  </head>
+  <body class="bg-white text-gray-800 font-poppins">
+    <Navbar />
+
+    <main class="max-w-5xl mx-auto px-6 py-16">
+      <h1
+        class="text-4xl md:text-5xl font-extrabold text-center text-blue-800 mb-6 tracking-wide"
+        data-aos="fade-down"
+      >
+        Servicios de Lavandería y Tintorería en Puebla
+      </h1>
+      <p
+        class="text-center text-xl text-gray-600 mb-12 max-w-3xl mx-auto"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        En <strong class="text-blue-700">Lavo Plus</strong> cuidamos tu ropa como
+        si fuera nuestra. ¡Rápido, profesional y confiable!
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div
+          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <div
+            class="bg-blue-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
+            style="width: 80px; height: 80px;"
+          >
+            <i class="fas fa-soap text-4xl"></i>
+          </div>
+          <h3 class="font-extrabold text-2xl text-blue-800 mb-3">Lavado General</h3>
+          <p class="text-gray-700 text-lg">
+            Servicio de lavado de ropa con cuidado especial para diferentes tipos de telas. Incluye lavado, enjuague y secado para prendas cotidianas.
+          </p>
+        </div>
+
+        <div
+          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div
+            class="bg-green-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
+            style="width: 80px; height: 80px;"
+          >
+            <i class="fas fa-bolt text-4xl"></i>
+          </div>
+          <h3 class="font-extrabold text-2xl text-green-800 mb-3">Lavado Exprés</h3>
+          <p class="text-gray-700 text-lg">
+            Lavado rápido para prendas que necesitas listas en poco tiempo, ideal para emergencias o ropa urgente. Servicio eficiente sin comprometer la calidad.
+          </p>
+        </div>
+
+        <div
+          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <div
+            class="bg-red-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
+            style="width: 80px; height: 80px;"
+          >
+            <i class="fas fa-tshirt text-4xl"></i>
+          </div>
+          <h3 class="font-extrabold text-2xl text-red-800 mb-3">Tintorería</h3>
+          <p class="text-gray-700 text-lg">
+            Limpieza en seco para prendas delicadas o que requieren un tratamiento especial, como trajes, vestidos de fiesta, y ropa que no puede mojarse.
+          </p>
+        </div>
+
+        <div
+          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
+          data-aos="fade-up"
+          data-aos-delay="500"
+        >
+          <div
+            class="bg-purple-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
+            style="width: 80px; height: 80px;"
+          >
+            <i class="fas fa-hand-holding-heart text-4xl"></i>
+          </div>
+          <h3 class="font-extrabold text-2xl text-purple-800 mb-3">Servicios Adicionales</h3>
+          <ul class="text-gray-700 text-lg list-disc list-inside space-y-1">
+            <li>Planchado y doblado (opcional)</li>
+            <li>Recogida y entrega a domicilio (si lo tienes)</li>
+            <li>Tratamiento de manchas difíciles</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Botón de WhatsApp -->
+      <div class="mt-16 text-center" data-aos="zoom-in" data-aos-delay="600">
+        <a
+          href="https://wa.me/522225547693"
+          target="_blank"
+          class="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white text-xl font-semibold py-4 px-10 rounded-full shadow-2xl transition duration-300"
+        >
+          <i class="fab fa-whatsapp text-2xl"></i>
+          <span>¡Cotiza tu servicio por WhatsApp!</span>
+        </a>
+      </div>
+    </main>
+
+        <script>
+  window.AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+  });
+</script>
+
+
+  </body>
+</html>

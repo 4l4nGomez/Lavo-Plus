@@ -1,0 +1,57 @@
+---
+import Navbar from '../components/Navbar.astro'
+import '../styles/global.css'
+---
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Ubicación | Lavo Plus</title>
+    <meta name="description" content="Encuentra nuestra lavandería y tintorería Dalailava en Puebla.">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  </head>
+  <body class="text-white">
+    <Navbar />
+    <section
+      class="relative w-full bg-cover bg-center bg-no-repeat"
+      style="background-image: url('/puebla.jpg');"
+    >
+      <!-- Overlay oscuro -->
+      <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+      <!-- Contenido -->
+      <main class="relative z-10 max-w-5xl mx-auto px-6 py-16 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4" data-aos="fade-up">
+          ¿Buscas una lavandería confiable en Puebla?
+        </h1>
+        <p class="text-lg md:text-xl text-gray-200 mb-8" data-aos="fade-up" data-aos-delay="100">
+          En <strong class="text-blue-300">Dalailava</strong> estamos cerca de ti. Visítanos y descubre por qué cientos de clientes confían en nuestro servicio.
+        </p>
+
+        <!-- MAPA -->
+        <div class="w-full h-[450px] mb-8">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d120691.4770757629!2d-98.3380509!3d19.0369586!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc1f4ef424dd9%3A0xcd7fdcbba09debed!2sLavo%20Plus%20-%20Tintorer%C3%ADa%20Y%20Lavander%C3%ADa!5e0!3m2!1ses!2smx!4v1748966910962!5m2!1ses!2smx"
+            class="w-full h-full rounded-lg shadow-md"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </main>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script is:inline>
+      if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', () => {
+          if (window.AOS) {
+            window.AOS.init();
+          }
+        });
+      }
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<nav class="bg-[#1565C0] text-white p-4 sticky top-0 z-50 shadow-lg font-poppins backdrop-blur-sm bg-opacity-90">
+  <div class="relative max-w-6xl mx-auto flex items-center justify-between">
+
+    <!-- Logo a la izquierda -->
+    <a href="/" class="absolute left-20 flex items-center space-x-2">
+      <img src="/lavoplus.png" alt="Logo" class="h-20 w-auto transition-transform duration-300 hover:scale-110" />
+      
+    </a>
+
+    <!-- Menú centrado -->
+    <ul id="menu" class="hidden md:flex flex-row items-center gap-12 mx-auto text-white text-lg font-semibold">
+      <li><a href="/" class="hover:text-pink-300 transition-colors duration-300 ease-in-out">Inicio</a></li>
+      <li><a href="/servicios" class="hover:text-pink-300 transition-colors duration-300 ease-in-out">Servicios</a></li>
+      <li><a href="/ubicacion" class="hover:text-pink-300 transition-colors duration-300 ease-in-out">Ubicación</a></li>
+      <li><a href="/contacto" class="hover:text-pink-300 transition-colors duration-300 ease-in-out">Contacto</a></li>
+    </ul>
+
+    <!-- Botón hamburguesa a la derecha -->
+    <button id="menu-btn" aria-label="Abrir menú" class="absolute right-4 md:hidden p-2 rounded-md hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">
+      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+</nav>
