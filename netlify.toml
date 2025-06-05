@@ -1,0 +1,13 @@
+[build]
+  publish = "dist" # o "build" si así se llama tu carpeta de salida
+  command = "npm run build" # o el comando que usas para compilar
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
