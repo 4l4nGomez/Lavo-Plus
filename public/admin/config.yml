@@ -1,18 +1,16 @@
-# public/admin/config.yml
 backend:
   name: git-gateway
-  branch: main
+  branch: main # o la rama principal de tu repo
 
-media_folder: "public/img/uploads"
-public_folder: "/img/uploads"
+media_folder: "public"
+public_folder: "/"
 
 collections:
-  - name: "promociones"
-    label: "Promociones"
-    folder: "src/content/promociones"
+  - name: "home"
+    label: "Página de Inicio"
+    folder: "src/content"
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Imagen", name: "image", widget: "image"}
-      - {label: "Descripción", name: "description", widget: "text"}
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Contenido", name: "body", widget: "markdown" }
