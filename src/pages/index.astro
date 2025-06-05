@@ -1,14 +1,23 @@
 ---
 import { getEntryBySlug } from 'astro:content';
-const { data } = await getEntryBySlug('home', 'home');
+
+const entry = await getEntryBySlug('home', 'home')
+const data = entry?.data;
 ---
 
 <main class="p-6 max-w-4xl mx-auto text-center">
-  <h1 class="text-4xl font-bold mb-4">{data.title}</h1>
-  <p class="text-lg mb-6">{data.subtitle}</p>
-  <img src={data.bannerImage} alt="Banner" class="rounded-xl mx-auto mb-8" />
-  <ul class="grid gap-4 text-left list-disc list-inside max-w-md mx-auto">
-    {data.features.map((item: string) => <li>{item}</li>)}
-
-  </ul>
+  {data ? (
+    <>
+      <h1 class="text-4xl font-bold mb-4">{data.title}</h1>
+      <p class="text-lg mb-6">{data.subtitle}</p>
+      <img src={data.bannerImage} alt="Banner" class="rounded-xl mx-auto mb-8" />
+      <ul class="grid gap-4 text-left list-disc list-inside max-w-md mx-auto">
+        {data.features.map((item: string) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </>
+  ) : (
+    <p class="text-red-500">No se pudo cargar el contenido.</p>
+  )}
 </main>
