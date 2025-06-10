@@ -1,9 +1,13 @@
 backend:
   name: git-gateway
-  branch: main  # O la rama principal que uses (master/main)
+  branch: main # o la rama principal de tu repositorio (ej. "master")
+  site_url: https://lavoplus.netlify.app
 
-media_folder: "public/img" # Donde se subirán las imágenes
-public_folder: "/img"
+media_folder: "public"       # Carpeta física donde se guardan imágenes
+public_folder: "/"           # Ruta pública para acceder a las imágenes
+
+editor:
+  preview: false
 
 collections:
   - name: "promociones"
@@ -12,6 +16,17 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Descripción", name: "body", widget: "markdown" }
-      - { label: "Imagen", name: "image", widget: "image" }
+      - label: "Título"
+        name: "title"
+        widget: "string"
+      - label: "Fecha"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD HH:mm"
+      - label: "Imagen"
+        name: "image"
+        widget: "image"
+        required: false
+      - label: "Contenido"
+        name: "body"
+        widget: "markdown"
