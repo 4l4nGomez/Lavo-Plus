@@ -1,14 +1,10 @@
 backend:
   name: github
-  repo: 4l4nGomez/Lavo-Plus  # 👈 Cambia esto a tu repo real
+  repo: 4l4nGomez/Lavo-Plus  # ⚠️ Pon aquí tu repo exacto
   branch: main
-  site_domain: lavoplus.netlify.app
 
 media_folder: "public"
 public_folder: "/"
-
-editor:
-  preview: false
 
 collections:
   - name: "promociones"
@@ -17,17 +13,7 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - label: "Título"
-        name: "title"
-        widget: "string"
-      - label: "Fecha"
-        name: "date"
-        widget: "datetime"
-        format: "YYYY-MM-DD HH:mm"
-      - label: "Imagen"
-        name: "image"
-        widget: "image"
-        required: false
-      - label: "Contenido"
-        name: "body"
-        widget: "markdown"
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Fecha", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm" }
+      - { label: "Imagen", name: "image", widget: "image", required: false }
+      - { label: "Contenido", name: "body", widget: "markdown" }
