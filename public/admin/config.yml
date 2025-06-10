@@ -2,6 +2,10 @@ backend:
   name: github
   repo: 4l4nGomez/Lavo-Plus  # ⚠️ Pon aquí tu repo exacto
   branch: main
+  auth_scope: repo
+  base_url: https://lavoplus.netlify.app
+  auth_endpoint: https://github.com/login/oauth/authorize
+  client_id: Ov23liBDKvkwzEDbZ3Nc
 
 media_folder: "public"
 public_folder: "/"
