@@ -1,16 +1,17 @@
 backend:
   name: git-gateway
-  branch: main # o la rama principal de tu repo
+  branch: main  # O la rama principal que uses (master/main)
 
-media_folder: "public"
-public_folder: "/"
+media_folder: "public/img" # Donde se subirán las imágenes
+public_folder: "/img"
 
 collections:
-  - name: "home"
-    label: "Página de Inicio"
-    folder: "src/content"
+  - name: "promociones"
+    label: "Promociones"
+    folder: "src/content/promociones"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Contenido", name: "body", widget: "markdown" }
+      - { label: "Descripción", name: "body", widget: "markdown" }
+      - { label: "Imagen", name: "image", widget: "image" }
