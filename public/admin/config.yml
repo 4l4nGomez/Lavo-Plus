@@ -1,10 +1,11 @@
 backend:
-  name: git-gateway
-  branch: main # o la rama principal de tu repositorio (ej. "master")
-  site_url: https://lavoplus.netlify.app
+  name: github
+  repo: 4l4nGomez/Lavo-Plus  # 👈 Cambia esto a tu repo real
+  branch: main
+  site_domain: lavoplus.netlify.app
 
-media_folder: "public"       # Carpeta física donde se guardan imágenes
-public_folder: "/"           # Ruta pública para acceder a las imágenes
+media_folder: "public"
+public_folder: "/"
 
 editor:
   preview: false
