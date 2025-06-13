@@ -1,0 +1,202 @@
+---
+// @ts-check
+export const prerender = false;
+
+import { readFile, writeFile } from 'fs/promises';
+import path from 'path';
+
+// 1. Definición de tipos
+interface Servicio {
+  nombre: string;
+  descripcion?: string;
+  precio?: string;
+  items?: string[];
+}
+
+interface ConfigData {
+  servicios: Servicio[];
+}
+
+const PASSWORD = "123456";
+let authenticated = false;
+
+// 2. Autenticación SSR con tipos
+if (import.meta.env.SSR) {
+  const authCookie = Astro.cookies.get('admin-auth')?.value;
+  authenticated = authCookie === PASSWORD;
+}
+
+// 3. Manejo de formulario con tipos CORREGIDO
+if (import.meta.env.SSR && Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  
+  if (formData.get('password') === PASSWORD) {
+    Astro.cookies.set('admin-auth', PASSWORD, {
+      path: '/admin',
+      httpOnly: true,
+      maxAge: 60 * 60 * 24
+    });
+    return Astro.redirect('/admin');
+  }
+
+  if (authenticated && formData.get('action') === 'save') {
+    // Nueva lógica para recolectar servicios
+    const servicios: Servicio[] = [];
+    let i = 0;
+    
+    // Recorrer todos los servicios del formulario
+    while (formData.get(`servicios[${i}][nombre]`)) {
+      servicios.push({
+        nombre: formData.get(`servicios[${i}][nombre]`)?.toString() || '',
+        descripcion: formData.get(`servicios[${i}][descripcion]`)?.toString(),
+        precio: formData.get(`servicios[${i}][precio]`)?.toString()
+      });
+      i++;
+    }
+
+    await writeFile(
+      path.join(process.cwd(), 'public', 'config.json'),
+      JSON.stringify({ servicios }, null, 2)
+    );
+    
+    // Redirigir para evitar reenvío del formulario
+    return Astro.redirect('/admin?success=1');
+  }
+}
+
+// 4. Carga de configuración con tipos
+let config: ConfigData = { servicios: [] };
+try {
+  const configPath = path.join(process.cwd(), 'public', 'config.json');
+  config = JSON.parse(await readFile(configPath, 'utf-8')) as ConfigData;
+} catch (error) {
+  console.error("Error loading config:", error);
+}
+---
+
+<html lang="es">
+<head>
+  <title>Admin - Lavo Plus</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100">
+  {!authenticated ? (
+    <div class="max-w-md mx-auto mt-20 p-8 bg-white rounded-lg shadow">
+      <h2 class="text-2xl font-bold mb-6">Acceso Administrador</h2>
+      <form method="POST" enctype="multipart/form-data">
+        <input 
+          type="password" 
+          name="password" 
+          placeholder="Contraseña" 
+          class="w-full p-2 border rounded mb-4"
+          required
+        />
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded">
+          Entrar
+        </button>
+      </form>
+    </div>
+  ) : (
+    <div class="max-w-4xl mx-auto p-6">
+      <h1 class="text-2xl font-bold mb-6">Editar Servicios</h1>
+      
+      <form method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="save" />
+        
+        <div id="servicios-container" class="space-y-4">
+          {config.servicios.map((servicio, index) => (
+            <div class="p-4 bg-white rounded-lg shadow">
+              <input
+                type="text"
+                name={`servicios[${index}][nombre]`}
+                value={servicio.nombre}
+                placeholder="Nombre del servicio"
+                class="w-full p-2 border rounded mb-2"
+                required
+              />
+              <textarea
+                name={`servicios[${index}][descripcion]`}
+                placeholder="Descripción"
+                class="w-full p-2 border rounded mb-2 h-24"
+              >{servicio.descripcion}</textarea>
+              <input
+                type="text"
+                name={`servicios[${index}][precio]`}
+                value={servicio.precio || ''}
+                placeholder="Precio (opcional)"
+                class="w-full p-2 border rounded"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div class="flex justify-between mt-6">
+          <button 
+            type="button" 
+            onclick="addService()"
+            class="px-4 py-2 bg-gray-200 rounded"
+          >
+            ➕ Añadir Servicio
+          </button>
+          <button 
+            type="submit" 
+            class="px-6 py-2 bg-green-600 text-white rounded"
+          >
+            💾 Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  )}
+
+  <script>
+    // Mostrar alerta de éxito
+    /** @type {import('sweetalert2').default} */
+  const Swal = window.Swal;
+  
+  if (new URLSearchParams(window.location.search).has('success')) {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Cambios guardados',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    window.history.replaceState({}, document.title, "/admin");
+  }
+
+    function addService() {
+      const container = document.getElementById('servicios-container');
+      if (!container) return;
+      
+      const index = container.children.length;
+      
+      const newService = document.createElement('div');
+      newService.className = 'p-4 bg-white rounded-lg shadow';
+      newService.innerHTML = `
+        <input
+          type="text"
+          name="servicios[${index}][nombre]"
+          placeholder="Nombre del servicio"
+          class="w-full p-2 border rounded mb-2"
+          required
+        />
+        <textarea
+          name="servicios[${index}][descripcion]"
+          placeholder="Descripción"
+          class="w-full p-2 border rounded mb-2 h-24"
+        ></textarea>
+        <input
+          type="text"
+          name="servicios[${index}][precio]"
+          placeholder="Precio (opcional)"
+          class="w-full p-2 border rounded"
+        />
+      `;
+      
+      container.appendChild(newService);
+    }
+  </script>
+</body>
+</html>

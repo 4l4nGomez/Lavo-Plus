@@ -9,11 +9,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@sanity/client": "^7.5.0",
     "astro": "^5.8.1",
     "decap-cms": "^3.6.3",
+    "express": "^5.1.0",
     "framer-motion": "^12.15.0",
     "keen-slider": "^6.8.6",
     "lucide": "^0.511.0",
+    "sweetalert2": "^11.22.0",
     "swiper": "^11.2.8"
   },
   "devDependencies": {

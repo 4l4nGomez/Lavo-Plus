@@ -1,6 +1,48 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+
+interface Servicio {
+  nombre: string;
+  descripcion?: string;
+  precio?: string;
+  items?: string[];
+}
+
+interface ServiceType {
+  icon: string;
+  color: string;
+}
+
+// Usar fetch con URL completa y validación
+let servicios: Servicio[] = [];
+try {
+  const response = await fetch(new URL('/config.json', Astro.url.origin));
+  if (response.ok) {
+    const data = await response.json();
+    servicios = data.servicios || [];
+  }
+} catch (error) {
+  console.error('Error loading config:', error);
+  // Datos de respaldo
+  servicios = [
+    {
+      nombre: "Lavado General",
+      descripcion: "Servicio de lavado de ropa con cuidado especial para diferentes tipos de telas."
+    },
+    {
+      nombre: "Lavado Exprés",
+      descripcion: "Lavado rápido para prendas que necesitas listas en poco tiempo."
+    }
+  ];
+}
+
+const serviceTypes: Record<string, ServiceType> = {
+  "Lavado General": { icon: "fa-soap", color: "blue" },
+  "Lavado Exprés": { icon: "fa-bolt", color: "green" },
+  "Tintorería": { icon: "fa-tshirt", color: "red" },
+  "Servicios Adicionales": { icon: "fa-hand-holding-heart", color: "purple" }
+};
 ---
 
 <html lang="es">
@@ -10,7 +52,7 @@ import Navbar from '../components/Navbar.astro';
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Servicios |  Lavo Plus</title>
+    <title>Servicios | Lavo Plus</title>
     <meta
       name="description"
       content="Lavandería y Tintorería en Puebla. Lavado, secado, planchado, y más con entrega a domicilio. ¡Cotiza por WhatsApp!"
@@ -20,7 +62,7 @@ import Navbar from '../components/Navbar.astro';
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
   </head>
   <body class="bg-white text-gray-800 font-poppins">
     <Navbar />
@@ -42,79 +84,56 @@ import Navbar from '../components/Navbar.astro';
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div
-          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
-          data-aos="fade-up"
-          data-aos-delay="200"
-        >
-          <div
-            class="bg-blue-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
-            style="width: 80px; height: 80px;"
-          >
-            <i class="fas fa-soap text-4xl"></i>
-          </div>
-          <h3 class="font-extrabold text-2xl text-blue-800 mb-3">Lavado General</h3>
-          <p class="text-gray-700 text-lg">
-            Servicio de lavado de ropa con cuidado especial para diferentes tipos de telas. Incluye lavado, enjuague y secado para prendas cotidianas.
-          </p>
-        </div>
-
-        <div
-          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
-          data-aos="fade-up"
-          data-aos-delay="300"
-        >
-          <div
-            class="bg-green-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
-            style="width: 80px; height: 80px;"
-          >
-            <i class="fas fa-bolt text-4xl"></i>
-          </div>
-          <h3 class="font-extrabold text-2xl text-green-800 mb-3">Lavado Exprés</h3>
-          <p class="text-gray-700 text-lg">
-            Lavado rápido para prendas que necesitas listas en poco tiempo, ideal para emergencias o ropa urgente. Servicio eficiente sin comprometer la calidad.
-          </p>
-        </div>
-
-        <div
-          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
-          data-aos="fade-up"
-          data-aos-delay="400"
-        >
-          <div
-            class="bg-red-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
-            style="width: 80px; height: 80px;"
-          >
-            <i class="fas fa-tshirt text-4xl"></i>
-          </div>
-          <h3 class="font-extrabold text-2xl text-red-800 mb-3">Tintorería</h3>
-          <p class="text-gray-700 text-lg">
-            Limpieza en seco para prendas delicadas o que requieren un tratamiento especial, como trajes, vestidos de fiesta, y ropa que no puede mojarse.
-          </p>
-        </div>
-
-        <div
-          class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
-          data-aos="fade-up"
-          data-aos-delay="500"
-        >
-          <div
-            class="bg-purple-600 text-white rounded-full p-6 mb-6 flex items-center justify-center"
-            style="width: 80px; height: 80px;"
-          >
-            <i class="fas fa-hand-holding-heart text-4xl"></i>
-          </div>
-          <h3 class="font-extrabold text-2xl text-purple-800 mb-3">Servicios Adicionales</h3>
-          <ul class="text-gray-700 text-lg list-disc list-inside space-y-1">
-            <li>Planchado y doblado (opcional)</li>
-            <li>Recogida y entrega a domicilio (si lo tienes)</li>
-            <li>Tratamiento de manchas difíciles</li>
-          </ul>
-        </div>
+        {servicios.map((servicio: Servicio, index: number) => {
+          const serviceType = serviceTypes[servicio.nombre] || { 
+            icon: "fa-star", 
+            color: "indigo" 
+          };
+          const colorClasses = {
+            bg: `bg-${serviceType.color}-600`,
+            text: `text-${serviceType.color}-800`
+          };
+          
+          return (
+            <div
+              class="bg-blue-50 rounded-2xl shadow-xl p-10 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
+              data-aos="fade-up"
+              data-aos-delay={200 + (index * 100)}
+            >
+              <div
+                class={`${colorClasses.bg} text-white rounded-full p-6 mb-6 flex items-center justify-center`}
+                style="width: 80px; height: 80px;"
+              >
+                <i class={`fas ${serviceType.icon} text-4xl`}></i>
+              </div>
+              <h3 class={`font-extrabold text-2xl ${colorClasses.text} mb-3`}>
+                {servicio.nombre}
+              </h3>
+              
+              {servicio.items ? (
+                <ul class="text-gray-700 text-lg list-disc list-inside space-y-1">
+                  {servicio.items.map((item: string) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="text-gray-700 text-lg">
+                  {servicio.descripcion}
+                </p>
+              )}
+              
+              {servicio.precio && (
+                <p class="mt-4 font-bold text-lg">
+                  {servicio.precio}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <!-- Botón de WhatsApp -->
-      <div class="mt-16 text-center" data-aos="zoom-in" data-aos-delay="600">
+      <div class="mt-16 text-center" data-aos="zoom-in" data-aos-delay={200 + (servicios.length * 100)}>
         <a
           href="https://wa.me/522225547693"
           target="_blank"
@@ -126,14 +145,12 @@ import Navbar from '../components/Navbar.astro';
       </div>
     </main>
 
-        <script>
-  window.AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true,
-  });
-</script>
-
-
+    <script>
+      window.AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+      });
+    </script>
   </body>
 </html>
